@@ -12,6 +12,19 @@ Explain purpose/limits of dimensionality reduction - distinguish linear vs nonli
 read explained variance and singular values - use trustworthiness - compare classifiers on reduced features without data leakage.
 (Course outcomes CO1, CO3 - edit wording in `src/content.py` if needed.)
 
+## Introduction: ML concepts and technical approach
+Machine learning (ML) uses data to find patterns and make predictions or descriptions without writing a separate rule for every case. This virtual lab (VL) explores **dimensionality reduction**: converting data with many features (measurements) into a smaller set of features. This can make data easier to visualize and may reduce computation, but it can also discard useful information.
+
+The lab uses the UCI Human Activity Recognition (HAR) dataset. Each example represents a smartphone motion window described by 561 features, and its label identifies one of six activities. The data are split into training and test sets. A scaler and each reduction method are fitted using training data only; the fitted transformations are then applied to test data. This prevents **data leakage**, where information from the test set influences model training or evaluation.
+
+Four reduction methods are explored:
+- **PCA (Principal Component Analysis)** is a linear method that creates orthogonal directions capturing as much variance as possible. Its explained-variance ratios help describe how much variance is retained.
+- **Truncated SVD** also finds a lower-dimensional linear representation using singular values. Unlike PCA, the implementation here does not centre its input, so it can produce different results.
+- **t-SNE** is a nonlinear visualization method designed to preserve local neighborhoods in a low-dimensional map. Its plots can reveal local groupings, but distances between clusters and the axes should not be interpreted as reliable global measurements. The standard t-SNE implementation used here cannot transform new samples, so it is evaluated separately from classification.
+- **UMAP** builds a neighborhood graph and optimizes a lower-dimensional representation. Its settings control the neighborhood scale and how tightly points can be packed; it supports transforming new samples after fitting.
+
+The lab uses **trustworthiness** to measure whether nearby points in an embedding were also neighbors in the original feature space. It also compares **Logistic Regression**, a supervised classifier, on original and reduced features. Accuracy and macro-averaged precision, recall and F1 summarize classification performance, while a confusion matrix shows which activities are mistaken for one another. These measures answer different questions: a visually clear plot does not necessarily produce the best classifier, and no single metric captures every desirable property.
+
 ## Features
 - All 12 educational sections in a sidebar navigation; ~10-question pre-test and post-test with scores and explanations.
 - Simulation: algorithm-specific controls, input validation with actionable errors, run button (no recompute on widget change), reset, seeds, runtime, spinner/status.
@@ -28,6 +41,11 @@ read explained variance and singular values - use trustworthiness - compare clas
 6. Trustworthiness (`sklearn.manifold.trustworthiness`) is computed against the matrix the algorithm received, with a validated `k < n/2`.
 7. UMAP in the comparison can be fitted on a stratified subset of the *training* set (default 3,000) for speed; the full training set and test set are then only transformed. Choose "Full training set" for the strict full-data variant.
 8. Limitations: single run per setting; 2D plots can mislead; t-SNE has no out-of-sample transform so it is excluded from the classification table.
+
+## Conclusion
+Dimensionality reduction offers a practical way to explore and work with high-dimensional data, but each method preserves different structure. PCA and Truncated SVD provide linear representations; t-SNE focuses on local structure for visualization; UMAP represents neighborhoods and can also transform new samples. Their outputs should therefore be interpreted according to each method's purpose and limitations.
+
+There is no universally best reduction method or setting. A sound comparison considers retained variance where applicable, neighborhood trustworthiness, classification metrics, runtime and the intended use of the reduced data. By fitting preprocessing and reducers on training data only and evaluating on held-out test data, this VL demonstrates how to make that comparison while avoiding data leakage.
 
 ## Dataset
 UCI HAR Dataset - Anguita et al., ESANN 2013 - https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones

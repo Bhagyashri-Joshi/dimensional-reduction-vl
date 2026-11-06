@@ -16,7 +16,7 @@ CONTRIBUTORS: list[dict[str, str]] = [{"name": "Bhagyashri Joshi", "role": "Deve
 FACULTY_GUIDE: dict[str, str] = {"name": "Prof. Ms. Priyanka Shah", "designation": "Assistant Professor", "department": "Computer Engineering"} # e.g. {"name": "Prof. ...", "designation": "...", "department": "..."}
 
 # Course outcomes are mapped by label only; add the official wording if your course sheet requires it.
-COURSE_OUTCOMES: dict[str, str] = {"CO1": "", "CO3": ""}
+COURSE_OUTCOMES: dict[str, str] = {"CO1": "Understand the basics of Machine Learning, its types, and essential concepts", "CO3": "Implement supervised learning models for regression and classification problems."}
 
 LEARNING_OUTCOMES = [
     "Explain the purpose and limitations of dimensionality reduction.",
