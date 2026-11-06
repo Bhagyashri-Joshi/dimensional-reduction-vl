@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+# Downloaded dataset (see data/README.md) - do not commit until redistribution terms are verified
+data/UCI HAR Dataset/
+data/*.zip
+data/__MACOSX/
+.streamlit/secrets.toml
